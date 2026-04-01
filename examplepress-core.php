@@ -33,6 +33,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// ── 1. Set the Route Topology (Origin Registration) ───────────────
+// This tells the router to use 'examplepress-core/template-front' 
+// ONLY when the request is for the front page. All other routes 
+// will safely fall back to their defaults.
 if ( function_exists( 'examplepress_register_route_origin' ) ) {
 	$__ep_config   = json_decode( file_get_contents( __DIR__ . '/examplepress.json' ), true ) ?: [];
 	$__ep_priority = (int) ( $__ep_config['routing']['priority'] ?? 10 );
@@ -44,17 +48,7 @@ if ( function_exists( 'examplepress_register_route_origin' ) ) {
 	unset( $__ep_config, $__ep_priority );
 }
 
-add_filter( 'examplepress_template_prefix', function ( $prefix ) {
-	return 'template';
-} );
-
-add_filter( 'examplepress_resolved_origin', function ( $origin ) {
-
-	$origin['namespace'] = 'examplepress-core';
-
-	return $origin;
-} );
-
+// ── 2. Blockstudio Initialization ─────────────────────────────────
 add_action( 'init', function () {
 	if ( ! class_exists( 'Blockstudio\\Build' ) ) {
 		return;
