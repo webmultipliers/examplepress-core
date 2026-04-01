@@ -6,6 +6,7 @@
  * Version:     0.0.0
  * Author:      vinnysgreen
  * Author URI:  https://vinnysgreen.com
+ * Theme: examplepress-theme
  * Text Domain: examplepress-core
  * Troy: internal.repo.mustuse.com
  */
@@ -28,40 +29,38 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	error_log( 'Composer autoload file not found. Please run "composer install".' );
 }
 
-// check for blockstudio, class
-if ( ! class_exists( 'Blockstudio\Build' ) ) {
-	add_action( 'admin_notices', function (): void {
-		echo '<div class="notice notice-error"><p><strong>ExamplePress Core:</strong> Blockstudio Build class not found. Please ensure the build dependencies are installed correctly.</p></div>';
-	} );
-} else {
-	add_action( 'init', function () {
-		Blockstudio\Build::init( [
-			'dir' => EP_PLUGIN_DIR . 'app',
-		] );
-	} );
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
-// examplepress_theme_namespace set to examplepress-core
+if ( function_exists( 'examplepress_register_route_origin' ) ) {
+	$__ep_config   = json_decode( file_get_contents( __DIR__ . '/examplepress.json' ), true ) ?: [];
+	$__ep_priority = (int) ( $__ep_config['routing']['priority'] ?? 10 );
 
-add_filter( 'examplepress_theme_namespace', function ( $namespace ) {
-	return 'examplepress-core';
-} );
+	examplepress_register_route_origin( 'examplepress-core', [
+		'front' => fn() => is_front_page() || is_home(),
+	], $__ep_priority );
 
-// examplepress_template_prefix
+	unset( $__ep_config, $__ep_priority );
+}
 
 add_filter( 'examplepress_template_prefix', function ( $prefix ) {
 	return 'template';
 } );
 
-// examplepress_route_context
+add_filter( 'examplepress_resolved_origin', function ( $origin ) {
 
-add_filter( 'examplepress_route_context', function ( $context ) {
-	$context = "front";
+	$origin['namespace'] = 'examplepress-core';
 
-	if ( is_front_page() || is_home() ) {
-		return 'front';
+	return $origin;
+} );
+
+add_action( 'init', function () {
+	if ( ! class_exists( 'Blockstudio\\Build' ) ) {
+		return;
 	}
 
-	return $context;
-
+	Blockstudio\Build::init( [
+		'dir' => plugin_dir_path( __FILE__ ) . 'app',
+	] );
 } );

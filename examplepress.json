@@ -1,0 +1,23 @@
+{
+	"$schema": "https://www.examplepress.com/schema/app",
+	"name": "ExamplePress Core",
+	"slug": "examplepress-core",
+	"description": "An ExamplePress companion plugin.",
+	"version": "0.0.0",
+	"routing": {
+		"priority": 10,
+		"routes": {
+			"front": {
+				"urls": [
+					"/"
+				],
+				"desc": "Home Page"
+			}
+		}
+	},
+	"troy": {
+		"server_url": "examplepress.repo.mustuse.com",
+		"repo": "",
+		"repo_id": ""
+	}
+}
