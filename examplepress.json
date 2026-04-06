@@ -4,6 +4,13 @@
 	"slug": "examplepress-core",
 	"description": "An ExamplePress companion plugin.",
 	"version": "0.0.0",
+	"updater": {
+		"github_repo": "",
+		"asset_filename": "examplepress-core.zip",
+		"default_channel": "stable",
+		"requires_wp": "6.9",
+		"requires_php": "8.4"
+	},
 	"routing": {
 		"priority": 10,
 		"routes": {

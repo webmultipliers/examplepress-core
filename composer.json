@@ -1,5 +1,8 @@
 {
+	"name": "examplepress-core/examplepress-core",
+	"description": "An ExamplePress companion plugin.",
+	"type": "wordpress-plugin",
 	"require": {
-		"blockstudio/blockstudio": "^7.1"
+		"php": ">=8.4"
 	}
 }
