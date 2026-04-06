@@ -3,7 +3,7 @@
  * Plugin Name: ExamplePress Core
  * Plugin URI:  https://examplepress.com
  * Description: An ExamplePress companion plugin.
- * Version:     0.0.0
+ * Version:     0.0.1
  * Author:      vinnysgreen
  * Author URI:  https://vinnysgreen.com
  * Theme: examplepress-theme
