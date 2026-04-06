@@ -21,10 +21,5 @@
 				"desc": "Home Page"
 			}
 		}
-	},
-	"troy": {
-		"server_url": "examplepress.repo.mustuse.com",
-		"repo": "",
-		"repo_id": ""
 	}
 }
