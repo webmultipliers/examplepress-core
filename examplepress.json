@@ -19,6 +19,12 @@
 					"/"
 				],
 				"desc": "Home Page"
+			},
+			"explore": {
+				"urls": [
+					"/explore"
+				],
+				"desc": "Explore Page"
 			}
 		}
 	}

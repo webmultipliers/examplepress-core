@@ -3,7 +3,7 @@
  * Plugin Name: ExamplePress Core
  * Plugin URI:  https://examplepress.com
  * Description: An ExamplePress companion plugin.
- * Version:     0.0.1
+ * Version:     0.0.3
  * Author:      vinnysgreen
  * Author URI:  https://vinnysgreen.com
  * Theme: examplepress-theme
@@ -16,20 +16,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// ── 1. Set the Route Topology (Origin Registration) ───────────────
-// This tells the router to use 'examplepress-core/template-front'
-// ONLY when the request is for the front page. All other routes
-// will safely fall back to their defaults.
-add_action( 'after_setup_theme', function () {
-	if ( function_exists( 'examplepress_register_route_origin' ) ) {
-		$__ep_config   = json_decode( file_get_contents( __DIR__ . '/examplepress.json' ), true ) ?: [];
-		$__ep_priority = (int) ( $__ep_config['routing']['priority'] ?? 10 );
+use ExamplePress\MU\Infrastructure\RouteRegistry;
 
-		examplepress_register_route_origin( 'examplepress-core', [
-			'front' => fn() => is_front_page() || is_home(),
-		], $__ep_priority );
-	}
-} );
+// ── 1. Set the Route Topology (Origin Registration) ───────────────
+if ( class_exists( RouteRegistry::class) ) {
+	$__ep_config   = json_decode( file_get_contents( __DIR__ . '/examplepress.json' ), true ) ?: [];
+	$__ep_priority = (int) ( $__ep_config['routing']['priority'] ?? 10 );
+
+	RouteRegistry::register( 'examplepress-core', [
+		'page-404'     => fn() => is_404(),
+		'front'        => fn() => is_front_page() || is_home(),
+		'page-explore' => fn() => is_page( 'explore' ),
+	], $__ep_priority );
+
+	unset( $__ep_config, $__ep_priority );
+}
 
 
 // ── 2. Blockstudio Initialization ─────────────────────────────────

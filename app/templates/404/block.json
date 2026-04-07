@@ -1,0 +1,7 @@
+{
+	"$schema": "https://blockstudio.dev/schema/block",
+	"name": "examplepress-core/template-page-404",
+	"title": "Template: 404 Page",
+	"category": "theme",
+	"blockstudio": true
+}

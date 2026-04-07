@@ -1,0 +1,8 @@
+{
+	"name": "explore",
+	"title": "Explore",
+	"slug": "explore",
+	"postType": "page",
+	"postStatus": "publish",
+	"templateLock": "all"
+}
